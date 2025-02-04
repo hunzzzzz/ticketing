@@ -13,7 +13,7 @@ class CorsConfig {
     fun corsWebFilter(): CorsWebFilter {
         val config = CorsConfiguration()
 
-        config.addAllowedOrigin("http://localhost:9090")
+        config.addAllowedOrigin("http://localhost:8080")
         config.addAllowedMethod("GET")
         config.addAllowedHeader("*")
         config.allowCredentials = true
