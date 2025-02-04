@@ -1,0 +1,28 @@
+server:
+  port: 9090
+
+spring:
+  # put init data (from data.sql)
+  sql:
+    init:
+      mode: always
+  # database
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/ticket
+    username: root
+    password: abcd!
+
+host:
+  url:
+    me: http://localhost:9090
+    queue-server: http://localhost:9091

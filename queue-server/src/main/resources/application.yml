@@ -1,0 +1,6 @@
+server:
+  port: 9091
+
+spring:
+  profiles:
+    active: local, test
