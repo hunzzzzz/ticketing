@@ -2,9 +2,6 @@ server:
   port: 8081
 
 spring:
-  # get config properties from .env file
-  config:
-    import: optional:file:.env[.properties]
   # redis
   data:
     redis:
