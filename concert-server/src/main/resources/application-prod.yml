@@ -6,9 +6,6 @@ spring:
   sql:
     init:
       mode: always
-  # get config properties from .env file
-  config:
-    import: optional:file:.env[.properties]
   # database
   jpa:
     defer-datasource-initialization: true
