@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
+import java.net.URLEncoder
 
 @Controller
 @RequestMapping("/concerts")
@@ -50,6 +51,7 @@ class ConcertController(
         // 기본 세팅
         val restTemplate = RestTemplate()
         val redirectUrl = "${myUrl}/concerts/${concertId}/ticket"
+        val encodedRedirectUrl = URLEncoder.encode(redirectUrl, "UTF-8")
 
         // 쿠키에서 토큰 값을 가져온다.
         val token = request.cookies?.firstOrNull { it.name == "${mapper[concertId]}-ticket" }?.value
@@ -72,6 +74,6 @@ class ConcertController(
         // 허용 상태면, 예매 페이지로 진입한다.
         return if (isAllowed) mapper[concertId]?.let { "$it-ticket" } ?: "error-page"
         // 대기 상태면, 대기 페이지로 리다이렉트한다.
-        else "redirect:${queueServerUrl}/wait?concertId=${concertId}&userId=${userId}&redirectUrl=${redirectUrl}"
+        else "redirect:${queueServerUrl}/wait?concertId=${concertId}&userId=${userId}&redirectUrl=${encodedRedirectUrl}"
     }
 }

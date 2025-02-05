@@ -2,12 +2,14 @@ package com.hunzz.queueserver.controller
 
 import com.hunzz.queueserver.service.QueueService
 import com.hunzz.queueserver.utility.ConcertCodeMapper.mapper
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.reactive.result.view.Rendering
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
+import java.net.URI
 
 @Controller
 class WaitController(
