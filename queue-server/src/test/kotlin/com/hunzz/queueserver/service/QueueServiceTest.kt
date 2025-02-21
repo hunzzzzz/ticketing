@@ -16,6 +16,9 @@ import reactor.test.StepVerifier
 @SpringBootTest(classes = [EmbeddedRedis::class])
 class QueueServiceTest {
     @Autowired
+    lateinit var tokenService: TokenService
+
+    @Autowired
     lateinit var queueService: QueueService
 
     @Autowired
@@ -100,9 +103,9 @@ class QueueServiceTest {
     }
 
     @Test
-    fun isAllowedByToken() {
+    fun isAllowed() {
         StepVerifier.create(
-            queueService.isAllowedByToken(
+            tokenService.isAllowed(
                 concertId = 1,
                 userId = 100,
                 token = "82ecf7c3902a78c3f1e73a1843bdb8d33dce26c82a272f421707b19a2e88db4c"
@@ -113,7 +116,7 @@ class QueueServiceTest {
 
     @Test
     fun generateToken() {
-        StepVerifier.create(queueService.generateToken(1, 100))
+        StepVerifier.create(tokenService.generateToken(1, 100))
             .expectNext("82ecf7c3902a78c3f1e73a1843bdb8d33dce26c82a272f421707b19a2e88db4c")
             .verifyComplete()
     }

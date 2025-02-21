@@ -41,19 +41,19 @@
         const userId = '[[${userId}]]';
         const queryParam = new URLSearchParams({concertId: concertId, userId: userId});
 
-        // 3초 간격으로 현재 대기 순위를 조회한다.
+        // 3초마다 현재 대기 순위를 조회한다.
         fetch('/queue/rank?' + queryParam)
             .then(response => response.json())
             .then(data => {
+                // 예매 페이지로 진입이 가능하면, 토큰을 생성하고 새로고침한다.
                 if (data.rank < 0) {
-                    // 예매 페이지로 진입이 가능하면, 토큰을 생성하고 새로고침한다.
-                    fetch('/queue/touch?' + queryParam)
+                    fetch('/queue/create-token?' + queryParam)
                         .then(response => {
-                            window.location.href = window.location.origin + window.location.pathname + window.location.search;
+                            window.location.href = window.location.origin + window.location.pathname + window.location.search; // 새로고침
                         });
                     return;
                 }
-                // 현재 대기 순위를 업데이트한다.
+                // 아직 대기 중이면, 현재 대기 순위를 업데이트한다.
                 document.querySelector('#rank').innerHTML = data.rank;
                 document.querySelector('#updated').innerHTML = `최종 업데이트: ${new Date()}`;
             })

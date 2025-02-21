@@ -53,32 +53,22 @@
     <img src="https://ticketimage.interpark.com/Play/image/large/24/24016943_p.gif"
          alt="오아시스 내한 공연"/>
     <h1>오아시스 내한 공연</h1>
-    <p class="description">오아시스가 돌아왔다! 16년 만의 역사적인 내한 공연, 놓칠 수 없는 단 한 번의 기회! 비틀스를 잇는 영국 록의 전설, 오아시스의 귀환! 2025년 10월 21일, 고양종합운동장에서 그들의 음악을 직접 경험하세요.</p>
-    <p>공연 정보: 2025.10.21 고양 종합운동장</p>
+    <p class="description">오아시스가 돌아왔다! 16년 만의 역사적인 내한 공연, 놓칠 수 없는 단 한 번의 기회! 비틀스를 잇는 영국 록의 전설, 오아시스의 귀환!</p>
+    <p>2025년 10월 21일, 고양종합운동장에서 그들의 음악을 직접 경험하세요!</p>
     <button class="cta-button" id="book-button">예매하기</button>
 </div>
 <script>
     document.getElementById('book-button').addEventListener('click', function () {
-        const myUrl = '[[${myUrl}]]'
         const concertId = '[[${concertId}]]'
         const userId = '[[${userId}]]';
         const queryParam = new URLSearchParams({userId: userId});
 
-        fetch(myUrl + '/concerts/' + concertId + '/ticket/check?' + queryParam)
+        fetch('/concerts/' + concertId + '/ticket/check?' + queryParam)
             .then(response => {
-                if (response.redirected) {
-                    // 서버에서 리다이렉트를 지시한 경우
-                    window.location.href = response.url;
-                } else {
-                    // 리다이렉트가 아닌 경우 (예: 예매 페이지로 이동)
-                    return response.text();
-                }
+                return response.text(); // 서버에서 반환된 URL 추출
             })
-            .then(data => {
-                if (data) {
-                    // 예매 페이지로 이동
-                    window.location.href = data;
-                }
+            .then(url => {
+                window.location.href = url; // 해당 URL로 리다이렉트
             })
             .catch(error => console.error(error));
     });
